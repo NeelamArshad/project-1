@@ -1,5 +1,41 @@
 ---
 title: "Quarto 1"
+Author: "Neelam Arshad"
 format: html
+execute: 
+  echo: false
 ---
 
+
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+library(palmerpenguins)
+```
+
+
+```{r}
+# Clean data
+penguins_clean <- penguins %>% drop_na()
+
+# Open a PNG graphics device
+png("penguin_plot.png", width = 800, height = 600)
+
+# Create the plot
+ggplot(penguins_clean, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+  geom_point(size = 3, alpha = 0.8) +
+  labs(
+    title = "Penguin Flipper vs. Bill Length",
+    subtitle = "Data from the palmerpenguins package",
+    x = "Bill Length (mm)",
+    y = "Flipper Length (mm)",
+    color = "Species"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", size = 18),
+    legend.position = "top"
+  )
+
+# Close the graphics device and save the plot
+dev.off()
+```
